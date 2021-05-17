@@ -481,6 +481,9 @@ class Head(tf.keras.layers.Layer):
         outputs = self._act(self._norm(self._conv_head(inputs), training=training))
         self.endpoints['head_1x1'] = outputs
 
+        if not self._mconfig.pooing:
+            return outputs
+        
         if self._mconfig.local_pooling:
             shape = outputs.get_shape().as_list()
             kernel_size = [1, shape[self.h_axis], shape[self.w_axis], 1]
@@ -514,6 +517,7 @@ class EffNetV2Model(tf.keras.Model):
                  model_name='efficientnetv2-s',
                  model_config=None,
                  include_top=True,
+                 pooling=True,
                  name=None):
         """Initializes an `Model` instance.
 
@@ -535,6 +539,11 @@ class EffNetV2Model(tf.keras.Model):
         self._mconfig = cfg.model
         if not include_top:
             self._mconfig.num_classes = None
+        if pooling:
+            self._mconfig.pooing = True
+        else:
+            self._mconfig.pooing = False
+
         self.endpoints = None
         self._build()
 
