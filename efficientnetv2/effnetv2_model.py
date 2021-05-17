@@ -34,7 +34,7 @@ import tensorflow as tf
 
 from . import effnetv2_configs
 from . import hparams
-import utils
+from . import utils
 import os
 
 
