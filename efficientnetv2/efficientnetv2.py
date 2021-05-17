@@ -8,15 +8,16 @@ def EfficientNetV2(
         input_shape=None,
         include_top=True,
         dropout_rate=None,
+        pooling=True,
         num_class=1000):
-    model = EffNetV2Model(model_name=model_name,include_top=include_top)
+    model = EffNetV2Model(model_name=model_name,include_top=include_top,pooling=pooling)
     if not input_shape:
         size = model._mconfig.eval.isize
         input_shape = (size, size, 3)
     x = tf.keras.Input(input_shape)
     output = model.call(x, training=None)
 
-    if not include_top and num_class:
+    if pooling and not include_top and num_class:
         if dropout_rate:
             output = tf.keras.layers.Dropout(dropout_rate)(output)
         output = tf.keras.layers.Dense(num_class)(output)

@@ -483,7 +483,7 @@ class Head(tf.keras.layers.Layer):
 
         if not self._mconfig.pooing:
             return outputs
-        
+
         if self._mconfig.local_pooling:
             shape = outputs.get_shape().as_list()
             kernel_size = [1, shape[self.h_axis], shape[self.w_axis], 1]
