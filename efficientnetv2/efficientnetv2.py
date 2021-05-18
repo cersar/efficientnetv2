@@ -24,7 +24,7 @@ def EfficientNetV2(
 
     model = tf.keras.Model(inputs=x,outputs=output)
 
-    if os.path.exists(weights):
+    if weights and os.path.exists(weights):
         model.load_weights(weights,by_name=True,skip_mismatch=True)
     else:
         raise ValueError('invalid weights path: {}!'.format(weights))
