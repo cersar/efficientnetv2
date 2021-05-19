@@ -12,7 +12,7 @@ def EfficientNetV2(
         num_class=1000):
     model = EffNetV2Model(model_name=model_name,include_top=include_top,pooling=pooling)
     if not input_shape:
-        size = model._mconfig.eval.isize
+        size = model.cfg.eval.isize
         input_shape = (size, size, 3)
     x = tf.keras.Input(input_shape)
     output = model.call(x, training=None)

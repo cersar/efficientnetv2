@@ -220,10 +220,6 @@ class BatchNormalization(tf.keras.layers.BatchNormalization):
 
   def call(self, inputs, training=None):
     outputs = super().call(inputs, training)
-    if training and not tf.executing_eagerly:
-      # A temporary hack for tf1 compatibility with keras batch norm.
-      for u in self.updates:
-        tf.compat.v1.add_to_collection(tf.compat.v1.GraphKeys.UPDATE_OPS, u)
     return outputs
 
 
